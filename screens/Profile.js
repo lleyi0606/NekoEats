@@ -12,8 +12,9 @@ import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableRipple } from 'react-native-paper';
 import DropDownPicker from 'react-native-dropdown-picker';
 import BottomTab from '../BottomTab';
-import { auth, fs } from '../firebase';
+import { auth, fs, db } from '../firebase';
 import { collection, setDoc, doc, getDoc} from 'firebase/firestore';
+import { getDatabase, ref, child, get, update } from "firebase/database";20
 
 export default function Profile() {
 
@@ -51,33 +52,24 @@ export default function Profile() {
           try {
             const docSnap = await getDoc(usersCollection);
             setUsers(docSnap.data());
+            setNewName(docSnap.data().Name);
+            setNewAllergies(docSnap.data().Allergies)
+            setNewAge(docSnap.data().Age)
+            setNewRace(docSnap.data().Race)
+            setNewGender(docSnap.data().Gender)
+            setNewHeight(docSnap.data().Height)
+            setNewWeight(docSnap.data().Weight)
             console.log(docSnap.data());
           } catch (error) {
             console.log(error)
           }
         };
         getUsers();
-
-        /*const maintainData = async () => {
-            await
-            setDoc(usersCollection,
-                {
-                    Name: users.Name,
-                    Allergies: users.Allergies,
-                    Age: users.Age,
-                    Race: users.Race,
-                    Height: users.Height,
-                    Weight: users.Weight,
-                    Gender: users.Gender,
-
-                })
-                .catch((error) => console.log(error));
-        };
-        maintainData();*/
       }, []);
     
     const updateData = async () => {
         const usersCollection = doc(fs, "userData", auth.currentUser?.email);
+        const tdee = (66 + (13.7 * newWeight) + (5 * newHeight) - (6.8 * newAge)) * 1.375
         await
             setDoc(usersCollection,
                 {
@@ -87,11 +79,17 @@ export default function Profile() {
                     Race: newRace,
                     Height: Number(newHeight),
                     Weight: Number(newWeight),
-                    Gender: newGender,
-
+                    Gender: newGender
                 })
                 .catch((error) => console.log(error));
-                navigation.navigate("BottomTab")
+                update(ref(db, auth.currentUser?.uid), {
+                    fatGoal: tdee*0.3/9, 
+                    proteinGoal: newWeight*2.20462*0.65, 
+                    carbGoal: (tdee - tdee*0.3 - newWeight*2.20462*0.65*4)/4,
+                    fibreGoal: newGender === 'Female' ? 21 : 30
+                })
+
+                navigation.push("BottomTab", {screen: "Settings"} )
     }
 
     const navigation = useNavigation();

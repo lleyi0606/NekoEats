@@ -13,6 +13,7 @@ import AppLoading from 'expo-app-loading';
 import useFonts from './font';
 import Settings from './screens/Settings';
 import CameraFood from './CameraFood';
+import Support from './Support';
 
 export default function App() {
 
@@ -52,6 +53,7 @@ export default function App() {
         <Stack.Screen name='NewProfile' component={NewProfile}/>
         <Stack.Screen name='NewProfile2' component={NewProfile2}/>
         <Stack.Screen name='CameraFood' component={CameraFood}/>
+        <Stack.Screen name='Support' component={Support}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

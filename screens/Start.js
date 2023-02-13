@@ -18,7 +18,7 @@ const Start = () => {
         flex:1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#f0efeb',
       }}>
       <View>
       <Text style = {{fontSize:35, fontWeight: 'bold', color: '#c7a799', paddingBottom: 10, fontFamily: 'SmartWatchBold-z8rd4'}}>

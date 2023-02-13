@@ -90,7 +90,8 @@ export default function Profile() {
 
     const writeUserData = () => {
         set(ref(db, auth.currentUser?.uid), {
-            mealCount: 1, 
+            counter: 0, 
+            mealCount: 0, 
             carbCount: 0, 
             proteinCount: 0, 
             fatCount: 0, 
@@ -270,9 +271,6 @@ export default function Profile() {
                 </TouchableRipple>
             </View>
 
-            <Text>NewProfile</Text>
-
-
 
         </View>
     );
@@ -280,7 +278,6 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },

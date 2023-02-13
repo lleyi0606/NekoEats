@@ -40,7 +40,8 @@ const BottomTab = () => {
                             color= {focused? '#bfbfbf' : '#c7a799'}
                             ></Feather>
                         </View>
-                    )
+                    ), 
+                    unmountOnBlur:true
                 }}/>
             <Tab.Screen name= "FoodPrint" component={FoodPrint}
                 options= {{
@@ -55,7 +56,8 @@ const BottomTab = () => {
                             color= {focused? '#bfbfbf' : '#c7a799'}
                             ></Ionicons>
                         </View>
-                    )
+                    ), 
+                    unmountOnBlur:true
                 }}
             />
             <Tab.Screen name= "Settings" component={Settings}
@@ -71,7 +73,8 @@ const BottomTab = () => {
                             color= {focused? '#bfbfbf' : '#c7a799'}
                             ></Ionicons>
                         </View>
-                    )
+                    ), 
+                    unmountOnBlur:true
                 }}
             />
         </Tab.Navigator>

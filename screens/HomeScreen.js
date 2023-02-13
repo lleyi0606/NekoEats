@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
-import { StyleSheet, View, Text, Image, SafeAreaView, Linking, Alert, ScrollView, RefreshControl} from 'react-native'
+import { StyleSheet, View, Text, Image, SafeAreaView, Linking, Alert } from 'react-native'
 import { TouchableOpacity, FlatList } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native';
 // import * as ImagePicker from 'expo-image-picker';
@@ -16,7 +16,6 @@ const Home = () => {
     const [mealData, setMealData] = useState(null);
     const [mealID, setMealID] = useState("");
     const [mealTitle, setMealTitle] = useState("");
-    const [refreshing, setRefreshing] = useState(true);
 
     const [users, setUsers] = useState({});
     const [usersDb, setUsersDb] = useState({});
@@ -70,7 +69,6 @@ const Home = () => {
           });
         setMealData(result.data);
         console.log(result.data);
-        setRefreshing(false);
     };
 
     /* useEffect(() => {
@@ -88,7 +86,6 @@ const Home = () => {
             const fetchData = async () => { 
                 const result = await axios(customiseRecoLink());
             setMealData(result.data);
-            setRefreshing(false);
             };
             fetchData();
     }, []); */
@@ -315,9 +312,6 @@ const Home = () => {
                         paddingBottom: 300, 
                     }}
                     style = {styles.reco}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={fetchData} />
-                    }
                     />
                 </View>
             )

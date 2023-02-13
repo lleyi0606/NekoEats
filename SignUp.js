@@ -64,7 +64,7 @@ const SignUp = () => {
                     size={25}
                     color='#755a57'
                     //backgroundColor={colors.background}
-                    onPress={() => navigation.navigate('LogIn')}
+                    onPress={() => navigation.replace('LogIn')}
                 />
             </View>
             <Title style={styles.welcome}>Welcome</Title>
@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center', 
+        backgroundColor: '#f0efeb'
     },
     text: {
         alignSelf: 'center',

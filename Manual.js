@@ -7,7 +7,6 @@ import Axios from 'axios';
 import { auth, db } from './firebase';
 import { getDatabase, ref, child, get, update } from "firebase/database";
 
-
 function Manual() {
 
     const [meal, setMeal] = useState("")
@@ -17,6 +16,7 @@ function Manual() {
     const [foodSelectedTitle, setFoodSelectedTitle] = useState("")
     const [uid, setUid] = useState(auth.currentUser?.uid)
     const [mealCount, setMealCount] = useState(0);
+    const [counter, setCounter] = useState(0);
 
     const [existingCarb, setExistingCarb] = useState(0)
     const [existingFat, setExistingFat] = useState(0)
@@ -39,6 +39,7 @@ function Manual() {
                 setExistingFat(snapshot.val().fatCount)
                 setExistingProtein(snapshot.val().proteinCount)
                 setExistingFibre(snapshot.val().fibreCount)
+                setCounter(snapshot.val().counter)
             } else {
                 console.log("Failed to fetch userdata");
             }
@@ -112,7 +113,6 @@ function Manual() {
             function helperFindFiber(goodArray) { 
                 for (let i = 0; i < goodArray.length; i++) {
                     if (goodArray[i].title === "Fiber") {
-                        // setFibre(parseInt(goodArray[i].amount.slice(0, -1)))
                         return parseInt(goodArray[i].amount.slice(0, -1));
                     }
                 }
@@ -125,10 +125,12 @@ function Manual() {
                 carb, 
                 protein, 
                 fat, 
-                fibre
-            })
+                fibre, 
+                counter
+            }) 
             .then(update(ref(db, uid), {
                 mealCount: mealCount + 1,
+                counter: counter + 1, 
                 carbCount: existingCarb + carb, 
                 proteinCount: existingProtein + protein, 
                 fatCount: existingFat + fat, 
@@ -148,22 +150,6 @@ function Manual() {
                     ]
                   )
             )
-
-           /* const dbRef = ref(getDatabase());
-            get(child(dbRef, uid)).then((snapshot) => {
-            if (snapshot.exists()) {
-                console.log(snapshot.val());
-                setMealCount(snapshot.val().mealCount)
-                setExistingCarb(snapshot.val().carbCount)
-                setExistingFat(snapshot.val().fatCount)
-                setExistingProtein(snapshot.val().proteinCount)
-                setExistingFibre(snapshot.val().fibreCount)
-            } else {
-                console.log("Failed to fetch userdata");
-            }
-            }).catch((error) => {
-            console.error(error);
-            }); */
 
         } else { 
             setAlert("Please choose your meal")

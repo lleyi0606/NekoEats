@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Button } from 'react-native-paper';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { Axios } from 'axios';
+import Axios from 'axios';
 
 const CameraFood = () => {
     const cameraRef = useRef();
@@ -15,6 +15,7 @@ const CameraFood = () => {
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
     const [photo, setPhoto] = useState();
+    const [meal, setMeal] = useState("");
 
     useEffect(() => {
         const permissions = async () => {
@@ -34,17 +35,64 @@ const CameraFood = () => {
             try {
                 const newPhoto = await cameraRef.current.takePictureAsync();
                 setPhoto(newPhoto.uri);
+                console.log(newPhoto.uri)
             } catch (error) {
                 console.log(error);
             }
         }
     }
 
+    function binEncode(data) {
+        var binArray = []
+        var datEncode = "";
+    
+        for (var i=0; i < data.length; i++) {
+            binArray.push(data[i].charCodeAt(0).toString(2)); 
+        } 
+        for (var j=0; j < binArray.length; j++) {
+            var pad = padding_left(binArray[j], '0', 8);
+            datEncode += pad + ' '; 
+        }
+        function padding_left(s, c, n) { if (! s || ! c || s.length >= n) {
+            return s;
+        }
+        var max = (n - s.length)/c.length;
+        for (var i = 0; i < max; i++) {
+            s = c + s; } return s;
+        }
+        console.log(binArray);
+    }
+
     const savePic = async () => {
         if (photo) {
             try {
-                await MediaLibrary.createAssetAsync(image);
-                // navigation.navigate(CameraLog)
+                await MediaLibrary.createAssetAsync(photo);
+                const url = `https://api.spoonacular.com/food/images/analyze?apiKey=05d4acea441c4cbda60f9ab6d5f22324&file=${photo}`
+                const result = await Axios.get(url);
+                if (result.data.length === 0) {
+                    return (
+                    Alert.alert(
+                        "Error!",
+                        "Food cannot be found",
+                        [
+                          { text: "Back", onPress: () => console.log("Back Pressed") }
+                        ]
+                      ))
+                }
+                Alert.alert(
+                    "Food found!",
+                    result.data.category.name,
+                    [
+                      {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      },
+                      { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                  ); 
+                console.log(result.data);
+                setMeal("");
             } catch (e) {
                 console.log(e);
             }

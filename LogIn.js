@@ -49,7 +49,7 @@ function LogIn() {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={require("./assets/temp.jpeg")} />
+      <Image style={styles.image} source={require("./assets/cat2.png")} />
       <Text style ={styles.logoText}>Welcome to NekoEats.</Text>
  
       <StatusBar style="a uto" />
@@ -94,13 +94,14 @@ export default LogIn;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f0efeb",
     alignItems: "center",
     justifyContent: "center",
   },
  
   image: {
-    marginBottom: 10,
+    height: "30%", 
+    width: "50%"
   },
 
   logoText: { 

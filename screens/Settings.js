@@ -20,7 +20,7 @@ import {
 } from 'react-native-paper';
 
 import { auth, db, fs } from '../firebase';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from "@react-navigation/stack";
 import * as ImagePicker from 'expo-image-picker';
 import UserAvatar from 'react-native-user-avatar';
@@ -175,7 +175,7 @@ const Settings = () => {
 
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => { }}>
+        <TouchableRipple onPress={() => {navigation.navigate('Support')}}>
           <View style={styles.box}>
             <MaterialCommunityIcons name="help-network-outline" size={20}></MaterialCommunityIcons>
             <Text style={styles.boxText}> Support</Text>
