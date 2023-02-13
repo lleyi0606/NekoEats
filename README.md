@@ -17,7 +17,7 @@ If you are someone who wishes to improve your health, set your own goals and mon
 ## Technologies Used 
 This app was built primarily with React Native, an open-source UI software framework. 
 
-The database has been deployed on firebase, utilising its Authentication, Firestore and Realtime Database features. 
+The database has been deployed on Firebase, utilising its Authentication, Firestore and Realtime Database features. 
 
 Meal data are fetched from [Spoonacular](https://spoonacular.com/food-api), empowering us to allow users to simply key in names of food when they wish to log it! _It would be unfeasible to manually log in 21g of protein and 30g of fats :(_
 
